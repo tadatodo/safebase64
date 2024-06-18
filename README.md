@@ -24,7 +24,7 @@ import (
 
 func main() {
     // will also block all numeric variations like "m01st"
-	s := safebase64.New([]string{"moist"})
+    s := safebase64.New([]string{"moist"})
     id := s.Generate(12)
     fmt.Println(id)
 }
