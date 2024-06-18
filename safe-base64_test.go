@@ -21,7 +21,7 @@ func TestGenerateBadWords(t *testing.T) {
 	}
 	require.True(t, found)
 
-	doesntProduceBadWord := NewWithRand([]string{"Diaen"}, rand.New(rand.NewSource(1)))
+	doesntProduceBadWord := NewWithRand([]string{"diaen"}, rand.New(rand.NewSource(1)))
 
 	for i := 0; i < 10; i++ {
 		got := doesntProduceBadWord.Generate(12)
