@@ -1,4 +1,4 @@
-# URL Safe, Swear Free Base64
+# URL Safe, Swear Free Base64 ID Generator
 
 This is a simple tool to generate (youtube alphabet) base64 strings and ensure they do not have block listed words in them.
 To prevent infinite generation (if you have a vast block list) the tool will panic if it cannot generate a string after 100 attempts.
