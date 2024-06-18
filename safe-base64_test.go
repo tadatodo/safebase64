@@ -1,18 +1,31 @@
 package safebase64
 
 import (
+	"fmt"
 	"math/rand"
 	"testing"
 
 	"github.com/stretchr/testify/require"
 )
 
+func TestGenerateNeverStartsWithUnderscoreOrHyphen(t *testing.T) {
+	b := NewWithRand([]string{}, rand.New(rand.NewSource(1)))
+	for i := 0; i < 1000; i++ {
+		id := b.Generate(12)
+		fmt.Println("id: ", id)
+		if id[0] == '-' || id[0] == '_' {
+			t.Errorf("Generate() = %v, want not to start with - or _", id)
+		}
+	}
+}
+
 func TestGenerateBadWords(t *testing.T) {
 	producesBadWord := NewWithRand([]string{}, rand.New(rand.NewSource(1)))
-	badWord := "FTZidia3NjuA"
+	badWord := "jTZidia3NjuA"
 
 	found := false
 	for i := 0; i < 10; i++ {
+
 		got := producesBadWord.Generate(12)
 		if got == badWord {
 			found = true

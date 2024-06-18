@@ -7,7 +7,10 @@ import (
 	"time"
 )
 
-const charset = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_"
+const (
+	letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+	charset = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_"
+)
 
 type Base64 struct {
 	BlockList []*regexp.Regexp
@@ -66,12 +69,13 @@ func (ba *Base64) Generate(n int) string {
 		return ""
 	}
 	for i := 0; i < 100; i++ {
-		b := make([]byte, n)
-		for i := range b {
-			num := ba.Rand.Intn(len(charset))
-			b[i] = charset[num]
+		// first character should start with a letter
+		// this is to avoid issues with URL encoding
+		firstCharIndex := ba.Rand.Intn(len(letters))
+		str := string(letters[firstCharIndex])
+		for i := 1; i < n; i++ {
+			str += string(charset[ba.Rand.Intn(len(charset))])
 		}
-		str := string(b)
 		if !ba.ContainsSwearWord(str) {
 			return str
 		}
