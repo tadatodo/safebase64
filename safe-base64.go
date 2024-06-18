@@ -41,7 +41,7 @@ func NewWithRand(blockList []string, r *rand.Rand) *Base64 {
 // take the list of words and generate regexes where numbers could be inserted, ensure case insensitivity, 1=i, 3=e, 4=a, 5=s, 0=o anywhere in the string
 func generateRegex(blockList []string) []*regexp.Regexp {
 	var regexList []*regexp.Regexp
-	i1Regex := regexp.MustCompile("1|i")
+	i1Regex := regexp.MustCompile("1|i|l")
 	e3Regex := regexp.MustCompile("3|e")
 	a4Regex := regexp.MustCompile("4|a")
 	s5Regex := regexp.MustCompile("5|s")
@@ -49,7 +49,7 @@ func generateRegex(blockList []string) []*regexp.Regexp {
 
 	for _, word := range blockList {
 		// replace 1 with i, 3 with e, 4 with a, 5 with s, 0 with o
-		word = i1Regex.ReplaceAllString(word, "[1i]")
+		word = i1Regex.ReplaceAllString(word, "[1il]")
 		word = e3Regex.ReplaceAllString(word, "[3e]")
 		word = a4Regex.ReplaceAllString(word, "[4a]")
 		word = s5Regex.ReplaceAllString(word, "[5s]")
